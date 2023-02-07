@@ -1,6 +1,6 @@
 package Servlets;
 
-import DAO.ParticipantService;
+import DAO.BatchService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -12,20 +12,20 @@ import org.bson.types.ObjectId;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/addone")
-public class addParticipantServlet extends HttpServlet {
+@WebServlet("/addonebatch")
+public class addBatchServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public addParticipantServlet() {
+    public addBatchServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getWriter().append("Served at: ").append(req.getContextPath()).append("<br>").append("<h3> All Partcipants </h3>");
+        resp.getWriter().append("Served at: ").append(req.getContextPath()).append("<br>").append("<h3> All Batches </h3>");
         PrintWriter out = resp.getWriter();
         out.print("<!DOCTYPE html>\n" +
                 "<html>\n" +
@@ -36,16 +36,15 @@ public class addParticipantServlet extends HttpServlet {
                 "</head>\n" +
                 "<body>");
 
-        resp.getWriter().append("Served at: ").append(req.getContextPath()).append("<br>").append("<h3> ADD PARTICIPANT </h3>");
         resp.setContentType("text/html");
-        resp.getWriter().println("<form method='post' action='addone'>");
+        resp.getWriter().println("<form method='post' action='addonebatch'>");
         resp.getWriter().println("<div class='form-group'>");
-        resp.getWriter().println("<label for='name'>Name:</label>");
+        resp.getWriter().println("<label for='name'>Name of the Batch:</label>");
         resp.getWriter().println("<input type='text' class='form-control' name='name' id='name' required>");
         resp.getWriter().println("</div>");
         resp.getWriter().println("<div class='form-group'>");
-        resp.getWriter().println("<label for='batchName'>BatchName:</label>");
-        resp.getWriter().println("<input type='text' class='form-control' name='batchName' id='batchName' required>");
+        resp.getWriter().println("<label for='batchName'>not required:</label>");
+        resp.getWriter().println("<input type='text' class='form-control' name='batchName' id='batchName'>");
         resp.getWriter().println("</div>");
         resp.getWriter().println("<button type='submit' class='btn btn-primary'>Submit</button>");
         resp.getWriter().println("</form>");
@@ -68,8 +67,8 @@ public class addParticipantServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
         String batchName = req.getParameter("batchName");
-        ParticipantService participantService = new ParticipantService();
-        Document participant = new Document("_id",new ObjectId()).append("name",name).append("BatchName",batchName);
+        BatchService batchService = new BatchService();
+        Document batch = new Document("_id",new ObjectId()).append("name",name);
         PrintWriter out = resp.getWriter();
         out.print("<!DOCTYPE html>\n" +
                 "<html>\n" +
@@ -79,7 +78,7 @@ public class addParticipantServlet extends HttpServlet {
                 "    <link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css\">\n" +
                 "</head>\n" +
                 "<body>");
-        out.print(participantService.addParticipant(participant).get("_id"));
+        out.print(batchService.addBatch(batch).get("ResultObject"));
         out.print("<div class=\"container\" style=\"margin-top: 50px;\">\n" +
                 "    <div class=\"row\" style=\"margin-top:50px;\">\n" +
                 "        <div class=\"col-md-6 offset-md-3\">\n" +

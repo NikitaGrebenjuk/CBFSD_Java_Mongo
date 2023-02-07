@@ -13,6 +13,8 @@
             <div class="list-group">
                 <a href="getall" class="list-group-item list-group-item-action">get all participants</a>
                 <a href="addone" class="list-group-item list-group-item-action">add one participant</a>
+                <a href="getallbatches" class="list-group-item list-group-item-action">get all batches</a>
+                <a href="addonebatch" class="list-group-item list-group-item-action">add one batch</a>
             </div>
         </div>
     </div>
